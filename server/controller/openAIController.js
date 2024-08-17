@@ -50,11 +50,12 @@ module.exports = {
       // });
 
       // const jObj = JSON.parse(completion.choices[0].message.content);
-      return res.status(200).json(text);
+      return res.status(200).json({data:JSON.parse(text.match(/json\s*(\[[\s\S]*\])/)[1])});
 
     } catch (error) {
       console.error('Error creating flashcards:', error);
       return res.status(500).json({ message: 'Internal server error.' });
+      
     }
   },
 
