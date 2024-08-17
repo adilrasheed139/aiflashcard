@@ -9,12 +9,17 @@
     "install": "cd server && npm i && cd ../client && npm i --production=false",
     "build": "cd client && npm run build",
     "seed": "node server/seed/seed.js",
-    "render-build":"npm install && npm run build"
+    "render-build": "npm install && npm run build"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "concurrently": "^8.2.2"
+    "@emotion/react": "^11.13.0",
+    "@emotion/styled": "^11.13.0",
+    "@mui/icons-material": "^5.16.7",
+    "@mui/material": "^5.16.7",
+    "concurrently": "^8.2.2",
+    "react-awesome-reveal": "^4.2.14"
   }
 }
