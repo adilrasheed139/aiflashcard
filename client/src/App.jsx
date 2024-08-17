@@ -3,7 +3,7 @@ import Navbar from './components/NavBar';
 import { ApolloClient, ApolloProvider, InMemoryCache, createHttpLink } from '@apollo/client'
 import { setContext } from '@apollo/client/link/context';
 const httpLink = createHttpLink({
-  uri: '/graphql',
+  uri: 'https://aiflashcard-production.up.railway.app/graphql',
 });
 const authLink = setContext((_, { headers }) => {
   // get the authentication token from local storage if it exists
