@@ -4,7 +4,10 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [react()],
   build: {
-    outDir: './dist', // Ensures build output goes to the correct folder
+    outDir: './dist',
+    rollupOptions: {
+      external: ['@mui/material'], // Externalizing the module
+    },
   },
   server: {
     port: 3000,
