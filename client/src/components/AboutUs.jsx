@@ -8,7 +8,7 @@ const AboutUs = ({ title, imageSrc, description, externalLink }) => {
         <h2>{title}</h2>
         <div className='about-us-subContainer'>
           <div className='about-us-imgContainer'>
-            <img src={imageSrc} alt={title} style={{ height: '200px', borderRadius: "50%", objectPosition: "top" }} />
+            <img src={imageSrc} alt={title} style={{ height: '200px', borderRadius: "50%", objectPosition: "center top",  }} />
           </div>
           <div className='about-us-description'>
             <div>{description}</div>

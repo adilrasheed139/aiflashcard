@@ -2,7 +2,6 @@ import AboutUs from '../components/AboutUs';
 import AntB from '../assets/images/AntB.png'
 import KarenD from '../assets/images/KarenD.png';
 import LukeG from '../assets/images/LukeG.png';
-import AdilR from '../assets/images/AdilR.jpg';
 import AdilRa from '../assets/images/AdilRa.jpg';
 
 export default function TeamPage(){
