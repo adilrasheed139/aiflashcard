@@ -37,7 +37,6 @@ Are you studying from an important exam?  Perhaps you have an interview and want
 ![Screen Shot 2024-03-12 at 10 06 09 PM](https://github.com/AnthonyBuffill/thinkFlash/assets/153314977/9cb73b7d-ad07-4c54-b55a-153672e82980)
 ![Screen Shot 2024-03-12 at 10 14 04 PM](https://github.com/AnthonyBuffill/thinkFlash/assets/153314977/a5d9a15a-97ef-4b73-9900-de23de23334d)
 ![Screen Shot 2024-03-12 at 10 14 04 PM](https://github.com/AnthonyBuffill/thinkFlash/assets/153314977/36f1e17b-48aa-489e-b556-db36343c0ae3)
-![Screen Shot 2024-03-12 at 8 34 00 PM](https://github.com/AnthonyBuffill/thinkFlash/assets/153314977/67da92bc-24eb-4cb8-8f61-9d3934eb9a04)
 
  ## License
 
@@ -94,14 +93,5 @@ community include:
 ## Questions? Contact Us
 **Links to the the developers portfolios and conact information can be found here**
 
-**Luke Garnsey**
-*https://phenomenal-caramel-76b1b5.netlify.app/*
-# **
-**Karen Douglas**
-*https://karenportfolio.netlify.app/*
-# **
-**Anthony Buffill**
-*https://antbuffillportfolio.netlify.app/*
-
 ## Deployment
-**LIVE URL:**  https://thinkflash-0iex.onrender.com/
+**LIVE URL:**  https://aiflashcard-rho.vercel.app/
