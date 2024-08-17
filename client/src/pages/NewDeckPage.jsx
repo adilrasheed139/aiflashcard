@@ -24,6 +24,7 @@ export default function NewDeckPage() {
     });
 
     const generateCards = (cardCount) => {
+        console.log('generateCards called with:', cardCount);
         cardCount = parseInt(cardCount, 10);
         if (isNaN(cardCount)) cardCount = 10;
         getCards({
@@ -37,6 +38,7 @@ export default function NewDeckPage() {
     };
 
     const addCard = () => {
+        console.log('addCard called with:', frontText, backText);
         setFlashCards([...flashCards, { frontText, backText }]);
         setState('addCard');
     };
