@@ -7,12 +7,12 @@ export default defineConfig({
     outDir: 'dist',
     rollupOptions: {
       // Ensure these dependencies are externalized
-      external: [
-        '@mui/material',
-        '@emotion/react',
-        '@emotion/cache',
-        '@emotion/styled'
-      ],
+    //  external: [
+      //  '@mui/material',
+      //  '@emotion/react',
+      //  '@emotion/cache',
+      //  '@emotion/styled'
+    //  ],
     },
   },
   server: {
