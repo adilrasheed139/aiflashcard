@@ -1,98 +1,98 @@
-import React, { useState } from 'react';
-import { TextField, Button, Box, Typography, Container, Grid, Divider } from '@mui/material';
-import { getAuth, createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
-import { Google } from '@mui/icons-material';
+import React, { useState } from "react";
+import { getAuth, createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, signInAnonymously } from "firebase/auth";
+import { auth } from "../firebaseConfig";
+import { Button, TextField, Container, Typography, IconButton } from "@mui/material";
+import GoogleIcon from '@mui/icons-material/Google';
+import EmailIcon from '@mui/icons-material/Email';
+import PhoneIcon from '@mui/icons-material/Phone';
+import PersonIcon from '@mui/icons-material/Person';
 
 function SignupPage() {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const auth = getAuth();
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
 
-    const handleEmailSignup = () => {
+    const handleSignup = () => {
         createUserWithEmailAndPassword(auth, email, password)
-            .then(userCredential => {
-                // Signed up successfully
-                console.log('User signed up:', userCredential.user);
+            .then((userCredential) => {
+                console.log(userCredential);
             })
-            .catch(error => {
-                console.error('Error signing up:', error);
+            .catch((error) => {
+                console.log(error);
             });
     };
 
     const handleGoogleSignup = () => {
         const provider = new GoogleAuthProvider();
         signInWithPopup(auth, provider)
-            .then(result => {
-                console.log('User signed in with Google:', result.user);
+            .then((result) => {
+                console.log(result.user);
             })
-            .catch(error => {
-                console.error('Error signing in with Google:', error);
+            .catch((error) => {
+                console.log(error);
+            });
+    };
+
+    const handleAnonymousSignup = () => {
+        signInAnonymously(auth)
+            .then((result) => {
+                console.log(result.user);
+            })
+            .catch((error) => {
+                console.log(error);
             });
     };
 
     return (
-        <Container maxWidth="xs">
-            <Box
-                sx={{
-                    marginTop: 8,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                }}
+        <Container maxWidth="sm">
+            <Typography variant="h4" align="center" gutterBottom>
+                Signup
+            </Typography>
+            <TextField
+                label="Email"
+                type="email"
+                fullWidth
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                margin="normal"
+            />
+            <TextField
+                label="Password"
+                type="password"
+                fullWidth
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                margin="normal"
+            />
+            <Button
+                variant="contained"
+                color="primary"
+                fullWidth
+                startIcon={<EmailIcon />}
+                onClick={handleSignup}
+                sx={{ mt: 2 }}
             >
-                <Typography component="h1" variant="h5">
-                    Sign Up
-                </Typography>
-                <Box sx={{ mt: 3 }}>
-                    <TextField
-                        variant="outlined"
-                        margin="normal"
-                        required
-                        fullWidth
-                        id="email"
-                        label="Email Address"
-                        name="email"
-                        autoComplete="email"
-                        autoFocus
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                    />
-                    <TextField
-                        variant="outlined"
-                        margin="normal"
-                        required
-                        fullWidth
-                        name="password"
-                        label="Password"
-                        type="password"
-                        id="password"
-                        autoComplete="current-password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                    />
-                    <Button
-                        type="submit"
-                        fullWidth
-                        variant="contained"
-                        color="primary"
-                        sx={{ mt: 3, mb: 2 }}
-                        onClick={handleEmailSignup}
-                    >
-                        Sign Up
-                    </Button>
-                    <Divider sx={{ my: 2 }}>OR</Divider>
-                    <Grid container justifyContent="center">
-                        <Button
-                            fullWidth
-                            variant="outlined"
-                            startIcon={<Google />}
-                            onClick={handleGoogleSignup}
-                        >
-                            Sign Up with Google
-                        </Button>
-                    </Grid>
-                </Box>
-            </Box>
+                Signup with Email
+            </Button>
+            <Button
+                variant="outlined"
+                color="primary"
+                fullWidth
+                startIcon={<GoogleIcon />}
+                onClick={handleGoogleSignup}
+                sx={{ mt: 2 }}
+            >
+                Signup with Google
+            </Button>
+            <Button
+                variant="outlined"
+                color="secondary"
+                fullWidth
+                startIcon={<PersonIcon />}
+                onClick={handleAnonymousSignup}
+                sx={{ mt: 2 }}
+            >
+                Signup Anonymously
+            </Button>
         </Container>
     );
 }
