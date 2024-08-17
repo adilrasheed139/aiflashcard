@@ -33,6 +33,27 @@ color: var(--blueColor);
 .hero-container figure img{
     max-width: 300px;
 }
+/* .hero-container div {
+    display: flex;
+    flex-direction: column;
+    max-width: 500px;
+    margin: 40px auto;
+    color: var(--brownColor);
+    -webkit-text-stroke: 1px var(--brownColor);
+    font-size: 48px;
+}
+*/
+.hero-container button{
+    width: 400px;
+    height: 70px;
+    font-size: 50px;
+    text-transform: uppercase;
+    padding: 6px;
+    border-radius: 15px;
+    cursor: pointer;
+    color: var(--brownColor);
+    -webkit-text-stroke: 1px var(--brownColor);
+}
 /* BOOST YOUR BRAIN POWER STYLES*/
 .brain-power{
    display: flex;

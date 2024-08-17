@@ -13,6 +13,9 @@ export default function AboutPage() {
           <h1>
           Where <span>Intelligence</span> meets  <span>intuition</span> in the world of <span>Digital learning</span>.
           </h1>
+          <div>
+          <Link style={{textDecoration:'none'}} to={'/Signup'}><button>get started!</button></Link>
+          </div>
         </header>
         <figure>
           <img src="/assets/ThinkFlashTransparent.png" alt="transparent flash cards image" />
