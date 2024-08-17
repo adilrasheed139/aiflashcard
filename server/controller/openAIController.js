@@ -21,7 +21,8 @@ module.exports = {
       const response = await result.response;
       const text = await response.text();  // Ensure text is properly awaited
 
-      // Improved JSON extraction using a more precise regex
+      console.log('API Response:', text);  // Log the full response text
+
       const jsonMatch = text.match(/json\s*(\[\s*{[^]*?}\s*])/i);
       if (jsonMatch) {
         const data = JSON.parse(jsonMatch[1]);
@@ -46,7 +47,8 @@ module.exports = {
       const response = await result.response;
       const text = await response.text();  // Ensure text is properly awaited
 
-      // Improved JSON extraction using a more precise regex
+      console.log('API Response:', text);  // Log the full response text
+
       const jsonMatch = text.match(/json\s*(\[\s*{[^]*?}\s*])/i);
       if (jsonMatch) {
         return JSON.parse(jsonMatch[1]);
