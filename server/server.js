@@ -5,6 +5,7 @@ const path = require('path');
 require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
 const { authMiddleware } = require('./utils/auth');
 const { connectToDatabase } = require('./config/connection'); // Updated import
+const cors = require('cors'); // Import cors
 
 const { typeDefs, resolvers } = require('./schemas');
 
@@ -20,6 +21,13 @@ const startApolloServer = async () => {
     // Connect to the database
     await connectToDatabase();
     await server.start();
+
+    // Use CORS middleware
+    app.use(cors({
+      origin: 'https://aiflashcard-rho.vercel.app', // Your frontend URL
+      methods: ['GET', 'POST', 'OPTIONS'],
+      credentials: true,
+    }));
 
     app.use(express.urlencoded({ extended: false }));
     app.use(express.json());
