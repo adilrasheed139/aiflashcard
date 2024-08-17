@@ -1,7 +1,6 @@
 const { MongoClient, ServerApiVersion } = require('mongodb');
 const uri = "mongodb+srv://adilrasheed139:xnXZY8yTMkrhTbxI@aiflashcard.dbeyt.mongodb.net/?retryWrites=true&w=majority&appName=aiflashcard";
 
-// Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
   serverApi: {
     version: ServerApiVersion.v1,
@@ -10,16 +9,28 @@ const client = new MongoClient(uri, {
   }
 });
 
-async function run() {
+let db;
+
+async function connectToDatabase() {
   try {
-    // Connect the client to the server	(optional starting in v4.7)
+    // Connect the client to the server
     await client.connect();
-    // Send a ping to confirm a successful connection
-    await client.db("admin").command({ ping: 1 });
-    console.log("Pinged your deployment. You successfully connected to MongoDB!");
-  } finally {
-    // Ensures that the client will close when you finish/error
-    await client.close();
+    db = client.db('aiflashcard');  // Replace 'aiflashcard' with your database name
+    console.log("Connected successfully to MongoDB Atlas");
+  } catch (error) {
+    console.error("Error connecting to MongoDB:", error);
   }
 }
-run().catch(console.dir);
+
+// Export the db variable to use in other parts of the application
+function getDatabase() {
+  if (!db) {
+    throw new Error('Database not initialized. Call connectToDatabase first.');
+  }
+  return db;
+}
+
+module.exports = {
+  connectToDatabase,
+  getDatabase,
+};
