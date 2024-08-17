@@ -11,7 +11,7 @@ export default function NewDeckPage() {
     const navigate = useNavigate();
     const [addDeckMutation, addDeckObj] = useMutation(ADD_DECK);
     const [flashCards, setFlashCards] = useState([]);
-    const [deckInfo, setDeckInfo] = useState({
+    const [deckInfo, setInfo] = useState({
         title: '',
         description: '',
     });
@@ -20,37 +20,29 @@ export default function NewDeckPage() {
     const [state, setState] = useState('generate');
 
     const [getCards, { loading, error, data }] = useLazyQuery(QUERY_CREATECARDS, {
-        fetchPolicy: 'network-only'
+        fetchPolicy: 'network-only',
+        onCompleted: (data) => {
+            console.log("Data received:", data);
+            const createCards = JSON.parse(data.createCards);
+            if (createCards.message !== undefined) {
+                console.log(createCards.message);
+                navigate(`/login`);
+                return;
+            }
+            let cards = createCards.flashCards || createCards.flashcards || [];
+            setFlashCards(cards);
+            setState('addCard');
+        },
     });
 
-    const generateCards = (cardCount) => {
-        console.log('generateCards called with:', cardCount);
-        cardCount = parseInt(cardCount, 10);
-        if (isNaN(cardCount)) cardCount = 10;
-        getCards({
-            variables: {
-                title: deckInfo.title,
-                frontText: frontText,
-                backText: backText,
-                cardCount: cardCount
-            }
-        });
-    };
-
-    const addCard = () => {
-        console.log('addCard called with:', frontText, backText);
-        setFlashCards([...flashCards, { frontText, backText }]);
-        setState('addCard');
-    };
-
     const saveDeck = () => {
-        if (!flashCards) return;
-
+        if (!flashCards.length) return;
+        
         addDeckMutation({
             variables: {
                 title: deckInfo.title,
                 description: deckInfo.description,
-                cardData: JSON.stringify(flashCards)
+                cardData: JSON.stringify(flashCards),
             },
         });
 
@@ -58,61 +50,52 @@ export default function NewDeckPage() {
         setState('saving');
     };
 
-    useEffect(() => {
-        if (!loading && data) {
-            const createCards = JSON.parse(data.createCards);
+    const generateCards = (cardCount) => {
+        cardCount = parseInt(cardCount, 10);
+        if (isNaN(cardCount)) cardCount = 10;
+        getCards({
+            variables: { 
+                title: deckInfo.title, 
+                frontText: frontText, 
+                backText: backText,
+                cardCount: cardCount
+            }
+        });
+    };
 
-            if (createCards.message) {
-                console.log(createCards.message);
+    const addCard = () => {
+        setFlashCards([
+            ...flashCards, { frontText: frontText, backText: backText }
+        ]);
+        setState('addCard');
+    };
+
+    useEffect(() => {
+        if (addDeckObj.data) {
+            if (addDeckObj.data.addDeck._id === null) {
                 navigate(`/login`);
                 return;
             }
-
-            const cards = createCards.flashCards || createCards.flashcards || [];
-            if (!flashCards.length) {
-                setFlashCards(cards);
-                setState('addCard');
-            } else {
-                setFlashCards([...flashCards, ...cards]);
-                setState('addCard');
-            }
+            const id = addDeckObj.data.addDeck._id;
+            setState('saving');
+            window.location.assign(`/deck/${id}/${Auth.getUser()?.data._id}`);
         }
-    }, [loading, data]);
-
-    useEffect(() => {
-        if (!addDeckObj.loading) {
-            if (addDeckObj.data) {
-                const id = addDeckObj.data.addDeck._id;
-                if (!id) {
-                    navigate(`/login`);
-                    return;
-                }
-                setState('saving');
-                window.location.assign(`/deck/${id}/${Auth.getUser()?.data._id}`);
-                return;
-            }
-            if (addDeckObj.error) {
-                console.log("Error Saving deck");
-            }
+        if (addDeckObj.error) {
+            console.log("Error Saving deck");
         }
     }, [addDeckObj]);
-
-    let value = 'START';
-    if (state === 'addCard') value = 'ADDCARD_FRONT';
-    else if (flashCards.length) value = 'GENERATE';
 
     return (
         <>
             {state === 'generate' && (
-                <Form formState={value} newDeck={{ setDeckInfo, setFrontText, setBackText, generateCards, addCard }} />
+                <Form formState="START" newDeck={{ setInfo, setFrontText, setBackText, generateCards, addCard }} />
             )}
             {state === 'addCard' && (
-                <Form formState={value} addCard={{ setFrontText, setBackText, addCard, setState: () => setState('generate') }} />
+                <Form formState="ADDCARD_FRONT" addCard={{ setFrontText, setBackText, addCard, setBackToGenerate: () => setState('generate') }} />
             )}
             {state === 'saving' && (
                 <Form formState='SAVING' saving={{ title: "Saving", text: `Saving ${deckInfo.title}` }} />
             )}
-
             {error && <h2>Issue with creating Flash Cards.</h2>}
             {flashCards.length > 0 && (
                 <>
@@ -139,17 +122,17 @@ const styles = {
     title: {
         textAlign: 'center',
         fontSize: '32px',
-        padding: '10px'
+        padding: '10px',
     },
     container: {
         margin: '32px auto',
         maxWidth: '1200px',
-        textAlign: 'center'
+        textAlign: 'center',
     },
     cardContainer: {
         display: 'flex',
         flexWrap: 'wrap',
         gap: '5px',
-        justifyContent: 'center'
-    }
+        justifyContent: 'center',
+    },
 };

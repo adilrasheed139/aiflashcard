@@ -55,17 +55,3 @@ export const QUERY_ME = gql`
     }
   }
 `;
-
-export const QUERY_DECK = gql`
-  query getDeck($deckId: ID!) {
-    deck(id: $deckId) {
-      _id
-      title
-      description
-      cards {
-        frontText
-        backText
-      }
-    }
-  }
-`;
