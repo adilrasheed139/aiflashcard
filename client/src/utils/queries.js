@@ -1,6 +1,6 @@
 import { gql } from '@apollo/client';
 
-export const QUERY_CREATECARDS= gql`
+export const QUERY_CREATECARDS = gql`
   query createCards($title: String!, $frontText: String!, $backText: String!, $cardCount: Int!) {
     createCards(title: $title, frontText: $frontText, backText: $backText, cardCount: $cardCount)
   }
@@ -11,7 +11,7 @@ export const QUERY_ALL_USERS = gql`
     users {
       _id
       username
-      decks{
+      decks {
         _id
         title
         description
@@ -22,17 +22,17 @@ export const QUERY_ALL_USERS = gql`
 
 export const QUERY_SINGLE_USER = gql`
   query singleUser($userId: ID!) {
-      user(userId: $userId) {
+    user(userId: $userId) {
+      _id
+      username
+      decks {
         _id
-        username
-        decks{
-          _id
-          title
-          description
-            cards {
-              frontText
-              backText
-          }
+        title
+        description
+        cards {
+          frontText
+          backText
+        }
       }
     }
   }
@@ -40,19 +40,32 @@ export const QUERY_SINGLE_USER = gql`
 
 export const QUERY_ME = gql`
   query me {
-      user {
+    user {
+      _id
+      username
+      decks {
         _id
-        username
-        decks{
-          _id
-          title
-          description
-            cards {
-              frontText
-              backText
-          }
+        title
+        description
+        cards {
+          frontText
+          backText
+        }
       }
     }
   }
 `;
 
+export const QUERY_DECK = gql`
+  query getDeck($deckId: ID!) {
+    deck(id: $deckId) {
+      _id
+      title
+      description
+      cards {
+        frontText
+        backText
+      }
+    }
+  }
+`;
