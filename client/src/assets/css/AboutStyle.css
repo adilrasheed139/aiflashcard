@@ -11,7 +11,7 @@
   margin: 10px;
 }
 .about-us-imgContainer img {
-  object-fit: contain;
+  object-fit: cover;
   width: 200px;
 }
 .about-us-description {
