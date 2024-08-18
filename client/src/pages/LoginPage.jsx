@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useRouter } from 'next/router'; // Import useRouter from next/router
+import { useNavigate } from 'react-router-dom'; // Import useNavigate from react-router-dom
 import { getAuth, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, signInAnonymously } from "firebase/auth";
 import { auth } from "../firebaseConfig";
 import { Button, TextField, Container, Typography } from "@mui/material";
@@ -10,13 +10,13 @@ import PersonIcon from '@mui/icons-material/Person';
 function LoginPage() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const router = useRouter(); // Initialize useRouter
+    const navigate = useNavigate(); // Initialize useNavigate
 
     const handleLogin = () => {
         signInWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
                 console.log(userCredential);
-                router.push('/DashboardPage'); // Redirect to the dashboard after login
+                navigate('/DashboardPage'); // Redirect to the dashboard after login
             })
             .catch((error) => {
                 console.log(error);
@@ -28,7 +28,7 @@ function LoginPage() {
         signInWithPopup(auth, provider)
             .then((result) => {
                 console.log(result.user);
-                router.push('/DashboardPage'); // Redirect to the dashboard after Google login
+                navigate('/DashboardPage'); // Redirect to the dashboard after Google login
             })
             .catch((error) => {
                 console.log(error);
@@ -39,7 +39,7 @@ function LoginPage() {
         signInAnonymously(auth)
             .then((result) => {
                 console.log(result.user);
-                router.push('/DashboardPage'); // Redirect to the dashboard after anonymous login
+                navigate('/DashboardPage'); // Redirect to the dashboard after anonymous login
             })
             .catch((error) => {
                 console.log(error);
