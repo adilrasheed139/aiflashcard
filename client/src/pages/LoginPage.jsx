@@ -4,20 +4,22 @@ import { auth } from "../firebaseConfig";
 import { Button, TextField, Container, Typography, IconButton } from "@mui/material";
 import GoogleIcon from '@mui/icons-material/Google';
 import EmailIcon from '@mui/icons-material/Email';
-import PhoneIcon from '@mui/icons-material/Phone';
 import PersonIcon from '@mui/icons-material/Person';
 
 function LoginPage() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [error, setError] = useState("");
 
     const handleLogin = () => {
         signInWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
-                console.log(userCredential);
+                console.log("Login successful:", userCredential);
+                // Redirect or update state here
             })
             .catch((error) => {
-                console.log(error);
+                console.error("Error signing in with email:", error);
+                setError(error.message);
             });
     };
 
@@ -25,20 +27,24 @@ function LoginPage() {
         const provider = new GoogleAuthProvider();
         signInWithPopup(auth, provider)
             .then((result) => {
-                console.log(result.user);
+                console.log("Google login successful:", result.user);
+                // Redirect or update state here
             })
             .catch((error) => {
-                console.log(error);
+                console.error("Error signing in with Google:", error);
+                setError(error.message);
             });
     };
 
     const handleAnonymousLogin = () => {
         signInAnonymously(auth)
             .then((result) => {
-                console.log(result.user);
+                console.log("Anonymous login successful:", result.user);
+                // Redirect or update state here
             })
             .catch((error) => {
-                console.log(error);
+                console.error("Error signing in anonymously:", error);
+                setError(error.message);
             });
     };
 
@@ -93,6 +99,11 @@ function LoginPage() {
             >
                 Login Anonymously
             </Button>
+            {error && (
+                <Typography color="error" align="center" sx={{ mt: 2 }}>
+                    {error}
+                </Typography>
+            )}
         </Container>
     );
 }

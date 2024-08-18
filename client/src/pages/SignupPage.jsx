@@ -4,7 +4,6 @@ import { auth } from "../firebaseConfig";
 import { Button, TextField, Container, Typography, IconButton } from "@mui/material";
 import GoogleIcon from '@mui/icons-material/Google';
 import EmailIcon from '@mui/icons-material/Email';
-import PhoneIcon from '@mui/icons-material/Phone';
 import PersonIcon from '@mui/icons-material/Person';
 
 function SignupPage() {
@@ -17,7 +16,7 @@ function SignupPage() {
                 console.log(userCredential);
             })
             .catch((error) => {
-                console.log(error);
+                console.error("Error signing up with email:", error);
             });
     };
 
@@ -28,7 +27,7 @@ function SignupPage() {
                 console.log(result.user);
             })
             .catch((error) => {
-                console.log(error);
+                console.error("Error signing up with Google:", error);
             });
     };
 
@@ -38,7 +37,7 @@ function SignupPage() {
                 console.log(result.user);
             })
             .catch((error) => {
-                console.log(error);
+                console.error("Error signing up anonymously:", error);
             });
     };
 
