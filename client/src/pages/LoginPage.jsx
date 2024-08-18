@@ -1,7 +1,8 @@
 import React, { useState } from "react";
+import { useRouter } from 'next/router'; // Import useRouter from next/router
 import { getAuth, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, signInAnonymously } from "firebase/auth";
 import { auth } from "../firebaseConfig";
-import { Button, TextField, Container, Typography, IconButton } from "@mui/material";
+import { Button, TextField, Container, Typography } from "@mui/material";
 import GoogleIcon from '@mui/icons-material/Google';
 import EmailIcon from '@mui/icons-material/Email';
 import PersonIcon from '@mui/icons-material/Person';
@@ -9,17 +10,16 @@ import PersonIcon from '@mui/icons-material/Person';
 function LoginPage() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [error, setError] = useState("");
+    const router = useRouter(); // Initialize useRouter
 
     const handleLogin = () => {
         signInWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
-                console.log("Login successful:", userCredential);
-                // Redirect or update state here
+                console.log(userCredential);
+                router.push('/dashboard'); // Redirect to the dashboard after login
             })
             .catch((error) => {
-                console.error("Error signing in with email:", error);
-                setError(error.message);
+                console.log(error);
             });
     };
 
@@ -27,24 +27,22 @@ function LoginPage() {
         const provider = new GoogleAuthProvider();
         signInWithPopup(auth, provider)
             .then((result) => {
-                console.log("Google login successful:", result.user);
-                // Redirect or update state here
+                console.log(result.user);
+                router.push('/dashboard'); // Redirect to the dashboard after Google login
             })
             .catch((error) => {
-                console.error("Error signing in with Google:", error);
-                setError(error.message);
+                console.log(error);
             });
     };
 
     const handleAnonymousLogin = () => {
         signInAnonymously(auth)
             .then((result) => {
-                console.log("Anonymous login successful:", result.user);
-                // Redirect or update state here
+                console.log(result.user);
+                router.push('/dashboard'); // Redirect to the dashboard after anonymous login
             })
             .catch((error) => {
-                console.error("Error signing in anonymously:", error);
-                setError(error.message);
+                console.log(error);
             });
     };
 
@@ -99,11 +97,6 @@ function LoginPage() {
             >
                 Login Anonymously
             </Button>
-            {error && (
-                <Typography color="error" align="center" sx={{ mt: 2 }}>
-                    {error}
-                </Typography>
-            )}
         </Container>
     );
 }
