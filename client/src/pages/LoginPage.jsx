@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from 'react-router-dom'; // Import useNavigate from react-router-dom
+import { useNavigate } from 'react-router-dom'; // Use react-router-dom's useNavigate
 import { getAuth, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, signInAnonymously } from "firebase/auth";
 import { auth } from "../firebaseConfig";
 import { Button, TextField, Container, Typography } from "@mui/material";
@@ -16,7 +16,7 @@ function LoginPage() {
         signInWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
                 console.log(userCredential);
-                navigate('/DashboardPage'); // Redirect to the dashboard after login
+                navigate('/dashboard'); // Redirect to the dashboard after login
             })
             .catch((error) => {
                 console.log(error);
@@ -28,7 +28,7 @@ function LoginPage() {
         signInWithPopup(auth, provider)
             .then((result) => {
                 console.log(result.user);
-                navigate('/DashboardPage'); // Redirect to the dashboard after Google login
+                navigate('/dashboard'); // Redirect to the dashboard after Google login
             })
             .catch((error) => {
                 console.log(error);
@@ -39,7 +39,7 @@ function LoginPage() {
         signInAnonymously(auth)
             .then((result) => {
                 console.log(result.user);
-                navigate('/DashboardPage'); // Redirect to the dashboard after anonymous login
+                navigate('/dashboard'); // Redirect to the dashboard after anonymous login
             })
             .catch((error) => {
                 console.log(error);
