@@ -1,22 +1,20 @@
 import React, { useState } from "react";
-import { useNavigate } from 'react-router-dom'; // Use react-router-dom's useNavigate
 import { getAuth, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, signInAnonymously } from "firebase/auth";
 import { auth } from "../firebaseConfig";
-import { Button, TextField, Container, Typography } from "@mui/material";
+import { Button, TextField, Container, Typography, IconButton } from "@mui/material";
 import GoogleIcon from '@mui/icons-material/Google';
 import EmailIcon from '@mui/icons-material/Email';
+import PhoneIcon from '@mui/icons-material/Phone';
 import PersonIcon from '@mui/icons-material/Person';
 
 function LoginPage() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const navigate = useNavigate(); // Initialize useNavigate
 
     const handleLogin = () => {
         signInWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
                 console.log(userCredential);
-                navigate('/dashboard'); // Redirect to the dashboard after login
             })
             .catch((error) => {
                 console.log(error);
@@ -28,7 +26,6 @@ function LoginPage() {
         signInWithPopup(auth, provider)
             .then((result) => {
                 console.log(result.user);
-                navigate('/dashboard'); // Redirect to the dashboard after Google login
             })
             .catch((error) => {
                 console.log(error);
@@ -39,7 +36,6 @@ function LoginPage() {
         signInAnonymously(auth)
             .then((result) => {
                 console.log(result.user);
-                navigate('/dashboard'); // Redirect to the dashboard after anonymous login
             })
             .catch((error) => {
                 console.log(error);
