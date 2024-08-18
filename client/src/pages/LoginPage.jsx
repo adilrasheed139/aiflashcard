@@ -16,7 +16,7 @@ function LoginPage() {
         signInWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
                 console.log(userCredential);
-                router.push('/dashboard'); // Redirect to the dashboard after login
+                router.push('/DashboardPage'); // Redirect to the dashboard after login
             })
             .catch((error) => {
                 console.log(error);
@@ -28,7 +28,7 @@ function LoginPage() {
         signInWithPopup(auth, provider)
             .then((result) => {
                 console.log(result.user);
-                router.push('/dashboard'); // Redirect to the dashboard after Google login
+                router.push('/DashboardPage'); // Redirect to the dashboard after Google login
             })
             .catch((error) => {
                 console.log(error);
@@ -39,7 +39,7 @@ function LoginPage() {
         signInAnonymously(auth)
             .then((result) => {
                 console.log(result.user);
-                router.push('/dashboard'); // Redirect to the dashboard after anonymous login
+                router.push('/DashboardPage'); // Redirect to the dashboard after anonymous login
             })
             .catch((error) => {
                 console.log(error);
