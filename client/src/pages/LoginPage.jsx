@@ -4,17 +4,19 @@ import { auth } from "../firebaseConfig";
 import { Button, TextField, Container, Typography, IconButton } from "@mui/material";
 import GoogleIcon from '@mui/icons-material/Google';
 import EmailIcon from '@mui/icons-material/Email';
-import PhoneIcon from '@mui/icons-material/Phone';
 import PersonIcon from '@mui/icons-material/Person';
+import { useNavigate } from "react-router-dom"; // Import useNavigate if using React Router
 
 function LoginPage() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const navigate = useNavigate(); // Initialize navigate
 
     const handleLogin = () => {
         signInWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
                 console.log(userCredential);
+                navigate("/dashboard"); // Redirect to the dashboard page
             })
             .catch((error) => {
                 console.log(error);
@@ -26,6 +28,7 @@ function LoginPage() {
         signInWithPopup(auth, provider)
             .then((result) => {
                 console.log(result.user);
+                navigate("/dashboard"); // Redirect to the dashboard page
             })
             .catch((error) => {
                 console.log(error);
@@ -36,6 +39,7 @@ function LoginPage() {
         signInAnonymously(auth)
             .then((result) => {
                 console.log(result.user);
+                navigate("/dashboard"); // Redirect to the dashboard page
             })
             .catch((error) => {
                 console.log(error);
