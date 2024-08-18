@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import Card from '../components/Card';
 import Auth from '../utils/auth';
 
-export default function NewDeckPage() {
+export default function NewDeck() {
     const navigate = useNavigate();
     const [addDeckMutation, addDeckObj] = useMutation(ADD_DECK);
     const [flashCards, setFlashCards] = useState([]);
@@ -21,16 +21,15 @@ export default function NewDeckPage() {
         onCompleted: (data) => {
             console.log("Data received:", data);
             try {
-                const createCards = JSON.parse(data.createCards);
-                
-                if (createCards.message !== undefined) {
+                const createCards = JSON.parse(data.createCards); // Ensure data is a JSON string
+
+                if (createCards.message) {
                     console.log(createCards.message);
                     navigate(`/login`);
                     return;
                 }
 
-                let cards = createCards;  // No need to access flashCards/flashcards inside the response
-                setFlashCards(cards);
+                setFlashCards(createCards); // Assuming createCards is an array
                 setState('addCard');
             } catch (error) {
                 console.error("Error parsing cards:", error);
