@@ -11,10 +11,7 @@ export default function NewDeckPage() {
     const navigate = useNavigate();
     const [addDeckMutation, addDeckObj] = useMutation(ADD_DECK);
     const [flashCards, setFlashCards] = useState([]);
-    const [deckInfo, setInfo] = useState({
-        title: '',
-        description: '',
-    });
+    const [deckInfo, setInfo] = useState({ title: '', description: '' });
     const [frontText, setFrontText] = useState('');
     const [backText, setBackText] = useState('');
     const [state, setState] = useState('generate');
@@ -23,26 +20,21 @@ export default function NewDeckPage() {
         fetchPolicy: 'network-only',
         onCompleted: (data) => {
             console.log("Data received:", data);
-            
-            // Ensure data is in the correct format
-            const createCards = data.createCards || [];
-            if (Array.isArray(createCards)) {
-                setFlashCards(createCards);
-                setState('addCard');
-            } else {
-                console.error('Unexpected response format:', createCards);
+            const createCards = JSON.parse(data.createCards);
+            if (createCards.message !== undefined) {
+                console.log(createCards.message);
                 navigate(`/login`);
+                return;
             }
+            let cards = createCards.flashCards || createCards.flashcards || [];
+            setFlashCards(cards);
+            setState('addCard');
         },
-        onError: (error) => {
-            console.error('Error fetching cards:', error);
-            setState('generate'); // Optionally reset state on error
-        }
     });
 
     const saveDeck = () => {
         if (!flashCards.length) return;
-
+        
         addDeckMutation({
             variables: {
                 title: deckInfo.title,
@@ -107,8 +99,8 @@ export default function NewDeckPage() {
                     <h3 style={styles.title}>{deckInfo.title}</h3>
                     <div style={styles.container}>
                         <div style={styles.cardContainer}>
-                            {flashCards.map((card, index) => (
-                                <Card key={index} frontText={card.frontText} backText={card.backText} />
+                            {flashCards.map((jsonData, index) => (
+                                <Card key={index} frontText={jsonData.frontText} backText={jsonData.backText} />
                             ))}
                         </div>
                     </div>
