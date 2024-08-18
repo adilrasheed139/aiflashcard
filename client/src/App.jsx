@@ -3,25 +3,24 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import LoginPage from './pages/LoginPage';
 import DashboardPage from './pages/DashboardPage';
 import Navbar from './components/NavBar'; // Ensure this path is correct
-import { ApolloClient, ApolloProvider, InMemoryCache, createHttpLink, setContext } from '@apollo/client';
+import { ApolloClient, ApolloProvider, InMemoryCache, createHttpLink, from, ApolloLink } from '@apollo/client';
 
-// Apollo Client setup
 const httpLink = createHttpLink({
   uri: 'https://aiflashcard-production.up.railway.app/graphql',
 });
 
-const authLink = setContext((_, { headers }) => {
+const authLink = new ApolloLink((operation, forward) => {
   const token = localStorage.getItem('id_token');
-  return {
+  operation.setContext({
     headers: {
-      ...headers,
-      authorization: token ? `Bearer ${token}` : '',
-    },
-  };
+      authorization: token ? `Bearer ${token}` : "",
+    }
+  });
+  return forward(operation);
 });
 
 const client = new ApolloClient({
-  link: authLink.concat(httpLink),
+  link: from([authLink, httpLink]),
   cache: new InMemoryCache(),
 });
 
