@@ -2,9 +2,10 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import LoginPage from './pages/LoginPage';
 import DashboardPage from './pages/DashboardPage';
-import Navbar from './components/Navbar';
-import { ApolloProvider, InMemoryCache, createHttpLink, setContext } from '@apollo/client';
+import Navbar from './components/NavBar'; // Ensure this path is correct
+import { ApolloClient, ApolloProvider, InMemoryCache, createHttpLink, setContext } from '@apollo/client';
 
+// Apollo Client setup
 const httpLink = createHttpLink({
   uri: 'https://aiflashcard-production.up.railway.app/graphql',
 });
