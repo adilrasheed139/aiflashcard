@@ -3,6 +3,8 @@ import AntB from '../assets/images/AntB.png'
 import KarenD from '../assets/images/KarenD.png';
 import LukeG from '../assets/images/LukeG.png';
 import AdilRa from '../assets/images/AdilRa.jpg';
+import MariaM from '../assets/images/MariaM.jpg';
+import HaroonA from '../assets/images/HaroonA.jpg';
 
 export default function TeamPage(){
 
@@ -32,7 +34,7 @@ export default function TeamPage(){
               textShadow: '2px 2px 4px rgba(0, 0, 0, 0.5)', // Example text shadow
               fontSize: '30px'
             }}>Maria Mahmood</span>}
-          imageSrc= {AntB}
+          imageSrc= {MariaM}
           description={<p style={{ fontStyle: 'italic', lineHeight: '1.5' }}>Dynamic full stack developer who revels in the artistry of CSS styling while embracing the entire spectrum of web development. My passion lies not only in crafting visually stunning and user-friendly interfaces but also in seamlessly bridging the gap between client and server-side functionalities. With a robust skill set that spans both frontend and backend technologies, I take pride in delivering end-to-end solutions that harmonize aesthetics with performance, ensuring a cohesive and engaging user experience. Click my portfolio link to see more of my work or contact me.</p>}
           externalLink= "#"
         />
@@ -47,7 +49,7 @@ export default function TeamPage(){
               textShadow: '2px 2px 4px rgba(0, 0, 0, 0.5)', 
               fontSize: '30px',
             }}>Haroon Anwar</span>}
-            imageSrc={LukeG}
+            imageSrc={HaroonA}
           description={<p style={{ fontStyle: 'italic', lineHeight: '1.5' }}>Dedicated full stack developer with a profound passion for server-side development. Armed with extensive expertise in crafting robust server architectures and optimizing backend functionality, I thrive on the challenge of creating seamless, efficient solutions that power exceptional user experiences. My commitment to staying at the forefront of technology ensures I bring innovative and scalable server-side solutions to every project I undertake. If you would like to see some of my other projects or wish to contact me, click on my profile link below.</p>}
           externalLink= "#"
         />
